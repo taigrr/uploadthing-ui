@@ -4,10 +4,10 @@
   "private": true,
   "packageManager": "pnpm@9.15.9",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "registry:build": "shadcn build",
     "release": "standard-version"
   },
@@ -27,7 +27,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.575.0",
     "motion": "^12.34.3",
-    "next": "15.5.12",
+    "next": "^16.1.6",
     "next-themes": "^0.4.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -41,12 +41,11 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^9",
-    "eslint-config-next": "15.5.12",
+    "eslint-config-next": "^16.1.6",
     "eslint-plugin-react-hooks": "^5.2.0",
     "postcss": "^8",
     "prettier": "^3.8.1",

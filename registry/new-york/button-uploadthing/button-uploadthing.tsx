@@ -112,9 +112,7 @@ function DisplayingToasts({
   const isMounted = useRef(true);
   const hasStartedUpload = useRef(false);
   const [progress, setProgress] = useState(0);
-  const [toastId, setToastId] = useState<string | number | undefined>(
-    undefined,
-  );
+  const toastIdRef = useRef<string | number | undefined>(undefined);
   const { updateFileStatus, removeFile } = useUploadthingStore();
 
   // [2] Uploadthing
@@ -161,33 +159,24 @@ function DisplayingToasts({
       updateFileStatus(uploadFile.id, "uploading");
 
       // Adding a toast for the upload
-      setToastId(
-        toast.custom(
-          (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
-          {
-            duration: Infinity,
-          },
-        ),
+      const id = toast.custom(
+        (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
+        {
+          duration: Infinity,
+        },
       );
+      toastIdRef.current = id;
 
       return;
     }
-  }, [
-    uploadFile,
-    progress,
-    isUploading,
-    hasStartedUpload,
-    toast,
-    startUpload,
-    updateFileStatus,
-    setToastId,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // When a file changes its status during the uploading process
   useEffect(() => {
-    if (uploadFile.status === "complete" && toastId) {
+    if (uploadFile.status === "complete" && toastIdRef.current) {
       toast.custom((t) => <ToastComponentCompleted uploadFile={uploadFile} />, {
-        id: toastId,
+        id: toastIdRef.current,
         duration: 4000,
       });
 
@@ -197,26 +186,26 @@ function DisplayingToasts({
       return;
     }
 
-    if (uploadFile.status === "error" && toastId) {
+    if (uploadFile.status === "error" && toastIdRef.current) {
       toast.custom((t) => <ToastComponentError uploadFile={uploadFile} />, {
-        id: toastId,
+        id: toastIdRef.current,
         duration: 4000,
       });
 
       return;
     }
-  }, [uploadFile, toastId, toast, removeFile]);
+  }, [uploadFile, toast, removeFile]);
 
   // When a file starts its uploading process
   useEffect(() => {
-    if (toastId && isUploading) {
+    if (toastIdRef.current && isUploading) {
       // Update the progress inside the toast
       toast.custom(
         (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
-        { id: toastId },
+        { id: toastIdRef.current },
       );
     }
-  }, [progress, toastId, isUploading]);
+  }, [progress, isUploading]);
 
   return <div className="hidden">{uploadFile.id}</div>;
 }
@@ -261,7 +250,7 @@ function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
     <div className="flex h-16 w-full select-none items-center gap-4 truncate rounded-md border px-4 text-xs shadow-lg sm:w-96">
       <Info className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
-        <p className="truncate">File couldn't be uploaded</p>
+        <p className="truncate">File couldn&apos;t be uploaded</p>
         <p className="truncate">{uploadFile.file.name}</p>
       </div>
       <GripVertical className="ml-auto min-w-10 stroke-1" />

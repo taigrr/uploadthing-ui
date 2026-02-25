@@ -12,7 +12,6 @@ export interface UTUIUploadFile {
 }
 
 export interface UTUIFunctionsProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fileRoute: EndpointArg<any, any>;
   onUploadProgress?: (progress: number) => void;
   onClientUploadComplete?:
