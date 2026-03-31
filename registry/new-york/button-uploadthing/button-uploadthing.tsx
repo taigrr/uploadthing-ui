@@ -98,7 +98,7 @@ export default function UTUIButtonUploadthing({
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-// DIsplaying Toasts
+// Displaying Toasts
 //////////////////////////////////////////////////////////////////////////////////
 
 function DisplayingToasts({
@@ -194,7 +194,7 @@ function DisplayingToasts({
 
       return;
     }
-  }, [uploadFile, toast, removeFile]);
+  }, [uploadFile, removeFile]);
 
   // When a file starts its uploading process
   useEffect(() => {
@@ -205,7 +205,7 @@ function DisplayingToasts({
         { id: toastIdRef.current },
       );
     }
-  }, [progress, isUploading]);
+  }, [progress, isUploading, uploadFile]);
 
   return <div className="hidden">{uploadFile.id}</div>;
 }
