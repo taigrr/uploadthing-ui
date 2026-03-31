@@ -370,7 +370,7 @@ function StopUploadConfirmation({
               {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
                 filesSum > 1 ? "s" : ""
               }`}{" "}
-              that still need to be transfered. Closing the transfer manager
+              that still need to be transferred. Closing the transfer manager
               will end all operations
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -404,7 +404,7 @@ function StopUploadConfirmation({
             {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
               filesSum > 1 ? "s" : ""
             }`}{" "}
-            that still need to be transfered. Closing the transfer manager will
+            that still need to be transferred. Closing the transfer manager will
             end all operations
           </DrawerDescription>
         </DrawerHeader>
@@ -446,8 +446,6 @@ function FileRow({
   const [progress, setProgress] = useState(0);
   const isMounted = useRef(true);
   const hasStartedUpload = useRef(false);
-  const {} = useGenericDriveStore();
-
   // [2] Uploadthing
   const { startUpload, isUploading } = useUploadThing(
     UTUIFunctionsProps.fileRoute,
@@ -485,7 +483,7 @@ function FileRow({
 
   // [3] Effects
   useEffect(() => {
-    // Only start upload if we haven't already and not abort has happened
+    // Only start upload if we haven't already and no abort has happened
     if (!hasStartedUpload.current && !isUploading) {
       hasStartedUpload.current = true;
 
@@ -496,7 +494,7 @@ function FileRow({
 
       onStatusChange(fileId, "uploading");
     }
-  }, [fileId, file, startUpload, onStatusChange]);
+  }, [fileId, file, startUpload, onStatusChange, isUploading]);
 
   // [4] JSX
   return (
