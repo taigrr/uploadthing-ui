@@ -1,5 +1,6 @@
+import { OurFileRouter } from "@/app/api/uploadthing/core";
 import { Json, MaybePromise, UploadThingError } from "@uploadthing/shared";
-import { ClientUploadedFileData, EndpointArg } from "uploadthing/types";
+import type { ClientUploadedFileData, EndpointArg } from "uploadthing/types";
 
 export type UTUIFileStatus = "pending" | "uploading" | "complete" | "error";
 
@@ -12,7 +13,7 @@ export interface UTUIUploadFile {
 }
 
 export interface UTUIFunctionsProps {
-  fileRoute: EndpointArg<any, any>;
+  fileRoute: EndpointArg<OurFileRouter, keyof OurFileRouter>;
   onUploadProgress?: (progress: number) => void;
   onClientUploadComplete?:
     | ((
