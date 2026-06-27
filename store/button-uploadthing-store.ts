@@ -16,6 +16,7 @@ export interface UploadFile {
 }
 
 interface FilesState {
+  files: UploadFile[];
   historicFiles: UploadFile[];
   setFiles: (newFiles: UploadFile[]) => void;
   updateFileStatus: (id: string, status: FileStatus, url?: string) => void;
