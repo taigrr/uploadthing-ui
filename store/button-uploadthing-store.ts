@@ -43,6 +43,9 @@ export const useUploadthingStore = create<FilesState>()((set) => ({
     }),
   updateFileStatus: (id, status, url) =>
     set((state) => ({
+      files: state.files.map((item) =>
+        item.id === id ? { ...item, status, url } : item,
+      ),
       historicFiles: state.historicFiles.map((item) =>
         item.id === id ? { ...item, status, url } : item,
       ),
