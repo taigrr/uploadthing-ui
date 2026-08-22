@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { createId } from "@paralleldrive/cuid2";
-import { UTUIFileStatus, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
+import type { UTUIFileStatus, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
 
 // Local Imports
 
@@ -37,9 +37,7 @@ export const useGenericDriveStore = create<FilesState>()((set) => ({
     })),
   updateFileStatus: (id, status, url) =>
     set((state) => ({
-      files: state.files.map((item) =>
-        item.id === id ? { ...item, status, url } : item,
-      ),
+      files: state.files.map((item) => (item.id === id ? { ...item, status, url } : item)),
     })),
   resetFiles: () =>
     set({

@@ -1,5 +1,5 @@
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import { Json, MaybePromise, UploadThingError } from "@uploadthing/shared";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import type { Json, MaybePromise, UploadThingError } from "@uploadthing/shared";
 import type { ClientUploadedFileData, EndpointArg } from "uploadthing/types";
 
 export type UTUIFileStatus = "pending" | "uploading" | "complete" | "error";
@@ -23,8 +23,6 @@ export interface UTUIFunctionsProps {
       ) => MaybePromise<void>)
     | undefined;
   onUploadError?: (error: UploadThingError<Json>) => void;
-  onBeforeUploadBegin?:
-    | ((files: File[]) => Promise<File[]> | File[])
-    | undefined;
+  onBeforeUploadBegin?: ((files: File[]) => Promise<File[]> | File[]) | undefined;
   onUploadBegin?: ((fileName: string) => void) | undefined;
 }

@@ -14,9 +14,7 @@
     "sonner",
     "next-themes"
   ],
-  "registryDependencies": [
-    "button"
-  ],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",

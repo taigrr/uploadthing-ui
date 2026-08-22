@@ -30,22 +30,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useUploadThing } from "@/lib/uploadthing";
-import { UTUIFileStatus, UTUIFunctionsProps } from "@/lib/uploadthing-ui-types";
-import {
-  capitalizeFirstLetter,
-  formatBytes,
-  getUploadedAmount,
-} from "@/lib/uploadthing-ui-utils";
+import type { UTUIFileStatus, UTUIFunctionsProps } from "@/lib/uploadthing-ui-types";
+import { capitalizeFirstLetter, formatBytes, getUploadedAmount } from "@/lib/uploadthing-ui-utils";
 import { useGenericDriveStore } from "@/store/button-generic-drive-store";
 
 // Body
@@ -58,7 +47,7 @@ export default function UTUIButtonGenericDrive({
 }) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, openModel, files, resetFiles } = useGenericDriveStore();
+  const { addFiles, openModel, resetFiles } = useGenericDriveStore();
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // [2] Derived states
@@ -73,9 +62,7 @@ export default function UTUIButtonGenericDrive({
     })
     .join(",");
 
-  const [abortSignal, setAbortSignal] = useState<AbortSignal | undefined>(
-    undefined,
-  );
+  const [abortSignal, setAbortSignal] = useState<AbortSignal | undefined>(undefined);
 
   // [3] Handlers
   const handleButtonClick = () => {
@@ -149,17 +136,9 @@ function FileModel({
   isDesktopMinWidth?: string;
 }) {
   // [1] Refs & States & Callbacks
-  const {
-    files,
-    displayModel,
-    updateFileStatus,
-    closeModel: closeModelStore,
-    resetFiles,
-  } = useGenericDriveStore();
+  const { files, displayModel, updateFileStatus, closeModel: closeModelStore, resetFiles } = useGenericDriveStore();
   const [stopConfirmationModel, setStopConfirmationModel] = useState(false);
-  const isDesktop = useMediaQuery(
-    `(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`,
-  );
+  const isDesktop = useMediaQuery(`(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`);
 
   const handleStatusChange = useCallback(
     (id: string, status: UTUIFileStatus, url?: string) => {
@@ -169,9 +148,7 @@ function FileModel({
   );
 
   // [2] Derived State
-  const isUploadComplete = files.every(
-    (file) => file.status === "complete" || file.status === "error",
-  );
+  const isUploadComplete = files.every((file) => file.status === "complete" || file.status === "error");
 
   // [3] Handlers
   function closeModel() {
@@ -348,9 +325,7 @@ function StopUploadConfirmation({
   closeOpen: () => void;
   onStopTransfers: () => void;
 }) {
-  const isDesktop = useMediaQuery(
-    `(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`,
-  );
+  const isDesktop = useMediaQuery(`(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`);
 
   // [1] JSX (Desktop)
   if (isDesktop) {
@@ -367,11 +342,8 @@ function StopUploadConfirmation({
             <AlertDialogTitle>Stop transfers?</AlertDialogTitle>
             <AlertDialogDescription>
               There
-              {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
-                filesSum > 1 ? "s" : ""
-              }`}{" "}
-              that still need to be transferred. Closing the transfer manager
-              will end all operations
+              {`${filesSum > 1 ? " are " : " is "}${filesSum} file${filesSum > 1 ? "s" : ""}`} that still need to be
+              transferred. Closing the transfer manager will end all operations
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
@@ -401,11 +373,8 @@ function StopUploadConfirmation({
           <DrawerTitle>Stop transfers?</DrawerTitle>
           <DrawerDescription>
             There
-            {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
-              filesSum > 1 ? "s" : ""
-            }`}{" "}
-            that still need to be transferred. Closing the transfer manager will
-            end all operations
+            {`${filesSum > 1 ? " are " : " is "}${filesSum} file${filesSum > 1 ? "s" : ""}`} that still need to be
+            transferred. Closing the transfer manager will end all operations
           </DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
@@ -434,52 +403,42 @@ interface FileUploaderProps {
   UTUIFunctionsProps: UTUIFunctionsProps;
 }
 
-function FileRow({
-  fileId,
-  file,
-  status,
-  abortSignal,
-  onStatusChange,
-  UTUIFunctionsProps,
-}: FileUploaderProps) {
+function FileRow({ fileId, file, status, abortSignal, onStatusChange, UTUIFunctionsProps }: FileUploaderProps) {
   // [1] State & Ref
   const [progress, setProgress] = useState(0);
   const isMounted = useRef(true);
   const hasStartedUpload = useRef(false);
   // [2] Uploadthing
-  const { startUpload, isUploading } = useUploadThing(
-    UTUIFunctionsProps.fileRoute,
-    {
-      uploadProgressGranularity: "fine",
-      signal: abortSignal,
-      onUploadProgress: (progress) => {
-        if (isMounted.current) {
-          setProgress(progress);
+  const { startUpload, isUploading } = useUploadThing(UTUIFunctionsProps.fileRoute, {
+    uploadProgressGranularity: "fine",
+    signal: abortSignal,
+    onUploadProgress: (progress) => {
+      if (isMounted.current) {
+        setProgress(progress);
 
-          // Your additional code here
-          UTUIFunctionsProps.onUploadProgress?.(progress);
-        }
-      },
-      onClientUploadComplete: (res) => {
-        if (isMounted.current && res?.[0]) {
-          onStatusChange(fileId, "complete", res[0].url);
-
-          // Your additional code here
-          UTUIFunctionsProps.onClientUploadComplete?.(res);
-        }
-      },
-      onUploadError: (error) => {
-        if (isMounted.current) {
-          onStatusChange(fileId, "error");
-
-          // Your additional code here
-          UTUIFunctionsProps.onUploadError?.(error);
-        }
-      },
-      onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
-      onUploadBegin: UTUIFunctionsProps.onUploadBegin,
+        // Your additional code here
+        UTUIFunctionsProps.onUploadProgress?.(progress);
+      }
     },
-  );
+    onClientUploadComplete: (res) => {
+      if (isMounted.current && res?.[0]) {
+        onStatusChange(fileId, "complete", res[0].url);
+
+        // Your additional code here
+        UTUIFunctionsProps.onClientUploadComplete?.(res);
+      }
+    },
+    onUploadError: (error) => {
+      if (isMounted.current) {
+        onStatusChange(fileId, "error");
+
+        // Your additional code here
+        UTUIFunctionsProps.onUploadError?.(error);
+      }
+    },
+    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
+  });
 
   // [3] Effects
   useEffect(() => {
@@ -499,19 +458,9 @@ function FileRow({
   // [4] JSX
   return (
     <TableRow>
-      <TableCell className="max-w-48 truncate text-left font-medium">
-        {file.name}
-      </TableCell>
+      <TableCell className="max-w-48 truncate text-left font-medium">{file.name}</TableCell>
       <TableCell>
-        <Badge
-          variant={
-            status === "complete"
-              ? "success"
-              : status === "error"
-                ? "destructive"
-                : "default"
-          }
-        >
+        <Badge variant={status === "complete" ? "success" : status === "error" ? "destructive" : "default"}>
           {capitalizeFirstLetter(status)}
         </Badge>
       </TableCell>
