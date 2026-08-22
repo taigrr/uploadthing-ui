@@ -63,4 +63,28 @@ describe("useUploadthingStore", () => {
       },
     ]);
   });
+
+  test("keeps active files in sync when statuses change", () => {
+    const firstFile = createUploadFile("first");
+
+    useUploadthingStore.getState().setFiles([firstFile]);
+    useUploadthingStore
+      .getState()
+      .updateFileStatus("first", "complete", "https://example.com/file.txt");
+
+    expect(useUploadthingStore.getState().files).toEqual([
+      {
+        ...firstFile,
+        status: "complete",
+        url: "https://example.com/file.txt",
+      },
+    ]);
+    expect(useUploadthingStore.getState().historicFiles).toEqual([
+      {
+        ...firstFile,
+        status: "complete",
+        url: "https://example.com/file.txt",
+      },
+    ]);
+  });
 });
