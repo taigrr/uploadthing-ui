@@ -30,10 +30,7 @@ export const useUploadthingStore = create<FilesState>()((set) => ({
     set((state) => {
       // Check if the file is already in the historicFiles array. If not, add it as well
       const newHistoricFiles = Array.from(newFiles).filter(
-        (file) =>
-          !state.historicFiles.some(
-            (historicFile) => historicFile.id === file.id,
-          ),
+        (file) => !state.historicFiles.some((historicFile) => historicFile.id === file.id),
       );
 
       return {
@@ -43,12 +40,8 @@ export const useUploadthingStore = create<FilesState>()((set) => ({
     }),
   updateFileStatus: (id, status, url) =>
     set((state) => ({
-      files: state.files.map((item) =>
-        item.id === id ? { ...item, status, url } : item,
-      ),
-      historicFiles: state.historicFiles.map((item) =>
-        item.id === id ? { ...item, status, url } : item,
-      ),
+      files: state.files.map((item) => (item.id === id ? { ...item, status, url } : item)),
+      historicFiles: state.historicFiles.map((item) => (item.id === id ? { ...item, status, url } : item)),
     })),
   removeFile: (id) =>
     set((state) => ({

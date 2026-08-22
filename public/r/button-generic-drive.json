@@ -14,10 +14,7 @@
     "@radix-ui/react-alert-dialog",
     "vaul"
   ],
-  "registryDependencies": [
-    "button",
-    "table"
-  ],
+  "registryDependencies": ["button", "table"],
   "files": [
     {
       "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",

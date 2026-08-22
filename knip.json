@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "entry": [
+    "env.js",
+    "app/**/*.{ts,tsx}",
+    "components/**/*.{ts,tsx}",
+    "hooks/**/*.{ts,tsx}",
+    "lib/**/*.{ts,tsx}",
+    "store/**/*.{ts,tsx}",
+    "registry/**/*.{ts,tsx}",
+    "scripts/**/*.{ts,tsx}"
+  ],
+  "ignore": ["oxlint-plugins/**"],
+  "ignoreDependencies": ["deslop-cli", "postcss-load-config"]
+}

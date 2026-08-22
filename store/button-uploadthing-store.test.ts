@@ -1,9 +1,7 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 
-import {
-  UploadFile,
-  useUploadthingStore,
-} from "@/store/button-uploadthing-store";
+import type { UploadFile } from "@/store/button-uploadthing-store";
+import { useUploadthingStore } from "@/store/button-uploadthing-store";
 
 function createUploadFile(id: string, name = `${id}.txt`): UploadFile {
   return {
@@ -26,14 +24,8 @@ describe("useUploadthingStore", () => {
     useUploadthingStore.getState().setFiles([firstFile]);
     useUploadthingStore.getState().setFiles([firstFile, secondFile]);
 
-    expect(useUploadthingStore.getState().files).toEqual([
-      firstFile,
-      secondFile,
-    ]);
-    expect(useUploadthingStore.getState().historicFiles).toEqual([
-      firstFile,
-      secondFile,
-    ]);
+    expect(useUploadthingStore.getState().files).toEqual([firstFile, secondFile]);
+    expect(useUploadthingStore.getState().historicFiles).toEqual([firstFile, secondFile]);
   });
 
   test("does not duplicate historic files with the same id", () => {
@@ -50,9 +42,7 @@ describe("useUploadthingStore", () => {
     const secondFile = createUploadFile("second");
 
     useUploadthingStore.getState().setFiles([firstFile, secondFile]);
-    useUploadthingStore
-      .getState()
-      .updateFileStatus("first", "complete", "https://example.com/file.txt");
+    useUploadthingStore.getState().updateFileStatus("first", "complete", "https://example.com/file.txt");
     useUploadthingStore.getState().removeFile("second");
 
     expect(useUploadthingStore.getState().historicFiles).toEqual([
@@ -68,9 +58,7 @@ describe("useUploadthingStore", () => {
     const firstFile = createUploadFile("first");
 
     useUploadthingStore.getState().setFiles([firstFile]);
-    useUploadthingStore
-      .getState()
-      .updateFileStatus("first", "complete", "https://example.com/file.txt");
+    useUploadthingStore.getState().updateFileStatus("first", "complete", "https://example.com/file.txt");
 
     expect(useUploadthingStore.getState().files).toEqual([
       {

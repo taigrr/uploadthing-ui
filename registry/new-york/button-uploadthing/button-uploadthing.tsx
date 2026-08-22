@@ -14,19 +14,11 @@ import { generatePermittedFileTypes } from "uploadthing/client";
 // Local Imports
 import { Button } from "@/components/ui/button";
 import { useUploadThing } from "@/lib/uploadthing";
-import {
-  UTUIFileStatus,
-  UTUIFunctionsProps,
-  UTUIUploadFile,
-} from "@/lib/uploadthing-ui-types";
+import type { UTUIFileStatus, UTUIFunctionsProps, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
 import { useUploadthingStore } from "@/store/button-uploadthing-store";
 
 // Body
-export default function UTUIButtonUploadthing({
-  UTUIFunctionsProps,
-}: {
-  UTUIFunctionsProps: UTUIFunctionsProps;
-}) {
+export default function UTUIButtonUploadthing({ UTUIFunctionsProps }: { UTUIFunctionsProps: UTUIFunctionsProps }) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { setFiles, historicFiles } = useUploadthingStore();
@@ -87,11 +79,7 @@ export default function UTUIButtonUploadthing({
       </div>
 
       {historicFiles.map((fileObj) => (
-        <DisplayingToasts
-          key={fileObj.id}
-          uploadFile={fileObj}
-          UTUIFunctionsProps={UTUIFunctionsProps}
-        />
+        <DisplayingToasts key={fileObj.id} uploadFile={fileObj} UTUIFunctionsProps={UTUIFunctionsProps} />
       ))}
     </div>
   );
@@ -116,38 +104,35 @@ function DisplayingToasts({
   const { updateFileStatus, removeFile } = useUploadthingStore();
 
   // [2] Uploadthing
-  const { startUpload, isUploading } = useUploadThing(
-    UTUIFunctionsProps.fileRoute,
-    {
-      uploadProgressGranularity: "fine",
-      onUploadProgress: (progress) => {
-        if (isMounted.current) {
-          setProgress(progress);
+  const { startUpload, isUploading } = useUploadThing(UTUIFunctionsProps.fileRoute, {
+    uploadProgressGranularity: "fine",
+    onUploadProgress: (progress) => {
+      if (isMounted.current) {
+        setProgress(progress);
 
-          // Your additional code here
-          UTUIFunctionsProps.onUploadProgress?.(progress);
-        }
-      },
-      onClientUploadComplete: (res) => {
-        if (isMounted.current && res?.[0]) {
-          updateFileStatus(uploadFile.id, "complete", res[0].url);
-
-          // Your additional code here
-          UTUIFunctionsProps.onClientUploadComplete?.(res);
-        }
-      },
-      onUploadError: (error) => {
-        if (isMounted.current) {
-          updateFileStatus(uploadFile.id, "error");
-
-          // Your additional code here
-          UTUIFunctionsProps.onUploadError?.(error);
-        }
-      },
-      onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
-      onUploadBegin: UTUIFunctionsProps.onUploadBegin,
+        // Your additional code here
+        UTUIFunctionsProps.onUploadProgress?.(progress);
+      }
     },
-  );
+    onClientUploadComplete: (res) => {
+      if (isMounted.current && res?.[0]) {
+        updateFileStatus(uploadFile.id, "complete", res[0].url);
+
+        // Your additional code here
+        UTUIFunctionsProps.onClientUploadComplete?.(res);
+      }
+    },
+    onUploadError: (error) => {
+      if (isMounted.current) {
+        updateFileStatus(uploadFile.id, "error");
+
+        // Your additional code here
+        UTUIFunctionsProps.onUploadError?.(error);
+      }
+    },
+    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
+  });
 
   // [3] Effects
   // When a file isn't uploading
@@ -159,23 +144,20 @@ function DisplayingToasts({
       updateFileStatus(uploadFile.id, "uploading");
 
       // Adding a toast for the upload
-      const id = toast.custom(
-        (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
-        {
-          duration: Infinity,
-        },
-      );
+      const id = toast.custom(() => <ToastComponent progress={progress} uploadFile={uploadFile} />, {
+        duration: Infinity,
+      });
       toastIdRef.current = id;
 
       return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line react/exhaustive-deps
   }, []);
 
   // When a file changes its status during the uploading process
   useEffect(() => {
     if (uploadFile.status === "complete" && toastIdRef.current) {
-      toast.custom((t) => <ToastComponentCompleted uploadFile={uploadFile} />, {
+      toast.custom(() => <ToastComponentCompleted uploadFile={uploadFile} />, {
         id: toastIdRef.current,
         duration: 4000,
       });
@@ -187,7 +169,7 @@ function DisplayingToasts({
     }
 
     if (uploadFile.status === "error" && toastIdRef.current) {
-      toast.custom((t) => <ToastComponentError uploadFile={uploadFile} />, {
+      toast.custom(() => <ToastComponentError uploadFile={uploadFile} />, {
         id: toastIdRef.current,
         duration: 4000,
       });
@@ -200,23 +182,14 @@ function DisplayingToasts({
   useEffect(() => {
     if (toastIdRef.current && isUploading) {
       // Update the progress inside the toast
-      toast.custom(
-        (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
-        { id: toastIdRef.current },
-      );
+      toast.custom(() => <ToastComponent progress={progress} uploadFile={uploadFile} />, { id: toastIdRef.current });
     }
   }, [progress, isUploading, uploadFile]);
 
   return <div className="hidden">{uploadFile.id}</div>;
 }
 
-function ToastComponent({
-  progress,
-  uploadFile,
-}: {
-  progress: number;
-  uploadFile: UTUIUploadFile;
-}) {
+function ToastComponent({ progress, uploadFile }: { progress: number; uploadFile: UTUIUploadFile }) {
   return (
     <div className="flex h-16 w-full select-none items-center gap-4 rounded-md border px-4 text-xs shadow-lg sm:w-96">
       <div className="min-w-11">
@@ -228,11 +201,7 @@ function ToastComponent({
   );
 }
 
-function ToastComponentCompleted({
-  uploadFile,
-}: {
-  uploadFile: UTUIUploadFile;
-}) {
+function ToastComponentCompleted({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
     <div className="flex h-16 w-full select-none items-center gap-4 rounded-md border px-4 text-xs shadow-lg sm:w-96">
       <CircleCheck className="min-w-6 fill-foreground stroke-background stroke-1" />
@@ -266,18 +235,8 @@ function CircularProgressBar({ percentage }: { percentage: number }) {
   // [1] JSX
   return (
     <div className="relative">
-      <svg
-        className="-rotate-90"
-        viewBox="0 0 36 36"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="18"
-          cy="18"
-          r="16"
-          fill="none"
-          className="stroke-current stroke-2 text-primary"
-        ></circle>
+      <svg className="-rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="18" cy="18" r="16" fill="none" className="stroke-current stroke-2 text-primary"></circle>
         <circle
           cx="18"
           cy="18"

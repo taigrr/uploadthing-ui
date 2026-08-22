@@ -1,3 +1,4 @@
+// oxlint-disable-next-line local/no-unnecessary-use-client -- passes callback props to client components
 "use client";
 
 import UTUIButtonGenericDrive from "@/registry/new-york/button-generic-drive/button-generic-drive";
@@ -11,15 +12,10 @@ export default function Home() {
   return (
     <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
       <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Uploadthing UI Registry
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight">Uploadthing UI Registry</h1>
         <p className="text-muted-foreground">
           Custom UI components for Uploadthing built on top of the{" "}
-          <Link
-            className="underline"
-            href={"https://ui.shadcn.com/docs/registry"}
-          >
+          <Link className="underline" href={"https://ui.shadcn.com/docs/registry"}>
             Shadcn Registry
           </Link>
           . This project is for{" "}
@@ -30,16 +26,13 @@ export default function Home() {
           <Link className="underline" href={"https://react.dev"}>
             React
           </Link>{" "}
-          only. It&apos;s an opinionated way of handling uploadthing&apos;s
-          client side state.
+          only. It&apos;s an opinionated way of handling uploadthing&apos;s client side state.
         </p>
       </header>
       <main className="flex flex-1 flex-col-reverse gap-8">
         <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm text-muted-foreground sm:pl-3">
-              Workflow: Inside storage drive applications
-            </h2>
+            <h2 className="text-sm text-muted-foreground sm:pl-3">Workflow: Inside storage drive applications</h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">
             <UTUIButtonGenericDrive

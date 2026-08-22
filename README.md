@@ -15,21 +15,23 @@ Custom UI components for Uploadthing built on top of the [Shadcn Registry](https
 <br/>
 
 ## Project Structure
+
 This project structure will be used upon installation of the components. This is just for reference
+
 ```
 │
 ├───api
 │   └───uploadthing
-│   |    └───core.ts  
-│   |    └───route.ts  
+│   |    └───core.ts
+│   |    └───route.ts
 └───components
 │   └───uploadthing-ui
 │   |    └─── ...
 └───lib
-│   └───uploadthing-ui-types.ts 
-│   └───uploadthing-ui-utils.ts 
-│   └───uploadthing.ts 
-└───store 
+│   └───uploadthing-ui-types.ts
+│   └───uploadthing-ui-utils.ts
+│   └───uploadthing.ts
+└───store
 │   └─── ...
 │
 
@@ -38,11 +40,15 @@ This project structure will be used upon installation of the components. This is
 <br/>
 
 ## Usage
+
 Create a .env file in the root directory and add the following variables
+
 ```bash
 UPLOADTHING_TOKEN=""
 ```
+
 Steps to follow from uploadthing's documentation
+
 - [Create your first file router](https://docs.uploadthing.com/getting-started/appdir#creating-your-first-file-route)
 - [Create a Next.js API route using your file router](https://docs.uploadthing.com/getting-started/appdir#create-a-next-js-api-route-using-the-file-router)
 - The [UploadThing Components](https://docs.uploadthing.com/getting-started/appdir#create-the-upload-thing-components) are generated automatically (with the required changes) when installing from this registry
@@ -50,24 +56,31 @@ Steps to follow from uploadthing's documentation
 <br>
 
 ## Showcase [1]
+
 Workflow: Inside the uploadthing&apos;s admin dashboard
 
 **Installation**
+
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
 
 Add inside your `layout.tsx`
+
 ```javascript
 import { Toaster } from "@/components/ui/sonner";
 ```
+
 ```javascript
 <Toaster expand theme="system" gap={8} />
 ```
+
 Add inside of a `client` component
+
 ```javascript
 import UTUIButtonUploadthing from "@/components/uploadthing-ui/button-uploadthing";
 ```
+
 ```javascript
 // add the fileRoute which you want to use
 // ps. fileRoute isn't typesafe
@@ -103,19 +116,23 @@ import UTUIButtonUploadthing from "@/components/uploadthing-ui/button-uploadthin
 <br/>
 
 ## Showcase [2]
+
 | Note: Isn't fully mobile responsive right now
 
 Workflow: Inside storage drive applications
 
 **Installation**
+
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
 ```
 
 Add inside of a `client` component
+
 ```javascript
 import UTUIButtonGenericDrive from "@/components/uploadthing-ui/button-generic-drive";
 ```
+
 ```javascript
 // add the fileRoute which you want to use
 // ps. fileRoute isn't typesafe
@@ -153,18 +170,25 @@ import UTUIButtonGenericDrive from "@/components/uploadthing-ui/button-generic-d
 ## Installation of the Registry
 
 **Clone the repository:**
+
 ```bash
 git clone https://github.com/webdevkaleem/uploadthing-ui.git
 ```
+
 **Create a .env file in the root directory and add the following variables**
+
 ```bash
 UPLOADTHING_TOKEN=""
 ```
+
 **Install dependencies**
+
 ```bash
 pnpm install
 ```
+
 **Start the development server**
+
 ```bash
 pnpm run dev
 ```
@@ -172,6 +196,7 @@ pnpm run dev
 <br/>
 
 ## Roadmap
+
 - Expand component functionalities
 - Enhance documentation and examples
 - Integrate additional features and improvements
@@ -179,14 +204,17 @@ pnpm run dev
 <br/>
 
 ## Shadcn Registry
+
 Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
 
 <br/>
 
 ## Contributing
+
 Contributions are welcome! Please open an issue or submit a PR to help improve the project.
 
 <br/>
 
 ### License
+
 [MIT](https://choosealicense.com/licenses/mit/)

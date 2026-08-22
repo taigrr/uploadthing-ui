@@ -32,9 +32,7 @@ describe("useGenericDriveStore", () => {
     useGenericDriveStore.getState().addFiles([firstFile, secondFile]);
     const [firstUpload, secondUpload] = useGenericDriveStore.getState().files;
 
-    useGenericDriveStore
-      .getState()
-      .updateFileStatus(firstUpload.id, "complete", "https://example.com/a");
+    useGenericDriveStore.getState().updateFileStatus(firstUpload.id, "complete", "https://example.com/a");
 
     expect(useGenericDriveStore.getState().files).toEqual([
       {

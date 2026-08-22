@@ -1,0 +1,41 @@
+{
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 120,
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "quoteProps": "as-needed",
+  "trailingComma": "all",
+  "semi": true,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "sortImports": false,
+  "sortPackageJson": false,
+  "sortTailwindcss": false,
+  "overrides": [
+    {
+      "files": ["**/*.{json,jsonc}"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/.next",
+    "**/.open-next",
+    "**/.wrangler",
+    "**/cloudflare-env.d.ts",
+    "**/.vercel",
+    "**/.turbo",
+    "**/.astro",
+    "**/components/ui",
+    "**/payload-types.ts",
+    "**/migrations",
+    "**/drizzle",
+    "**/worker-configuration.d.ts"
+  ]
+}

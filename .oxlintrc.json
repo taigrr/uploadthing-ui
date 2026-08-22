@@ -1,0 +1,102 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "jsx-a11y", "import", "typescript", "nextjs"],
+  "jsPlugins": ["./oxlint-plugins/local.js"],
+  "categories": {
+    "correctness": "off"
+  },
+  "rules": {
+    "local/no-classname-template-literal": "error",
+    "local/no-usestate-from-query": "warn",
+    "local/no-effect-set-from-query": "warn",
+    "local/no-unnecessary-use-client": "error",
+    "local/no-unknown-directive": "error",
+    "local/no-nested-component-definition": "warn",
+    "local/prefer-cn-over-clsx": "warn",
+    "local/no-magic-numbers-except-timers": "warn",
+    "local/no-cross-package-relative-import": "warn",
+    "local/no-implicit-any-let": "warn",
+    "local/no-svg-without-title": "warn",
+
+    "react/no-danger": "error",
+
+    "no-unused-vars": ["warn", { "args": "all", "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+    "react/exhaustive-deps": "warn",
+    "react/rules-of-hooks": "error",
+
+    "typescript/consistent-type-imports": "warn",
+    "typescript/consistent-type-exports": "warn",
+    "typescript/no-non-null-assertion": "warn",
+    "max-lines": ["warn", { "max": 500 }],
+
+    "react/jsx-no-useless-fragment": "warn",
+    "no-unneeded-ternary": "warn",
+
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": "warn",
+    "react/button-has-type": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/prefer-tag-over-role": "warn",
+    "jsx-a11y/anchor-is-valid": "warn",
+    "jsx-a11y/label-has-associated-control": "warn",
+    "jsx-a11y/anchor-has-content": "warn",
+    "jsx-a11y/media-has-caption": "warn",
+    "jsx-a11y/interactive-supports-focus": "warn",
+    "jsx-a11y/iframe-has-title": "warn",
+    "jsx-a11y/no-interactive-element-to-noninteractive-role": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/no-noninteractive-element-interactions": "warn",
+    "jsx-a11y/role-supports-aria-props": "warn",
+
+    "array-callback-return": "warn",
+    "react/no-array-index-key": "warn",
+    "no-shadow-restricted-names": "warn",
+    "no-cond-assign": ["warn", "always"],
+    "typescript/no-non-null-asserted-optional-chain": "warn",
+    "typescript/no-explicit-any": "warn",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-empty": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.stories.{js,ts,jsx,tsx}"],
+      "rules": {
+        "react/rules-of-hooks": "off"
+      }
+    },
+    {
+      "files": [
+        "scripts/**",
+        "tools/**",
+        "infra/**",
+        "**/*.config.{js,ts,mjs,cjs}",
+        "**/scripts/**",
+        "**/test/**",
+        "**/tests/**",
+        "**/*.{test,spec}.{js,ts,jsx,tsx}",
+        "**/examples/**"
+      ],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "node_modules",
+    "oxlint-plugins",
+    "dist",
+    "build",
+    ".next",
+    ".open-next",
+    ".wrangler",
+    "cloudflare-env.d.ts",
+    ".vercel",
+    ".turbo",
+    ".astro",
+    "**/components/ui",
+    "**/payload-types.ts",
+    "**/migrations",
+    "**/drizzle",
+    "**/worker-configuration.d.ts",
+    "**/templates"
+  ]
+}
