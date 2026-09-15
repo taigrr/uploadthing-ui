@@ -40,25 +40,25 @@ export default function Home() {
                 fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
-                  console.log(files);
+                  console.warn(files);
 
                   return files;
                 },
                 onUploadBegin: (fileName) => {
                   // Your additional code here
-                  console.log(fileName);
+                  console.warn(fileName);
                 },
                 onUploadProgress: (progress) => {
                   // Your additional code here
-                  console.log(progress);
+                  console.warn(progress);
                 },
                 onClientUploadComplete: (res) => {
                   // Your additional code here
-                  console.log(res);
+                  console.warn(res);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
-                  console.log(error);
+                  console.error(error);
                 },
               }}
             />
@@ -76,25 +76,25 @@ export default function Home() {
                 fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
-                  console.log(files);
+                  console.warn(files);
 
                   return files;
                 },
                 onUploadBegin: (fileName) => {
                   // Your additional code here
-                  console.log(fileName);
+                  console.warn(fileName);
                 },
                 onUploadProgress: (progress) => {
                   // Your additional code here
-                  console.log(progress);
+                  console.warn(progress);
                 },
                 onClientUploadComplete: (res) => {
                   // Your additional code here
-                  console.log(res);
+                  console.warn(res);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
-                  console.log(error);
+                  console.error(error);
                 },
               }}
             />
