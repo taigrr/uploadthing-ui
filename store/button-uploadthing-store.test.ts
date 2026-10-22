@@ -37,6 +37,25 @@ describe("useUploadthingStore", () => {
     expect(useUploadthingStore.getState().historicFiles).toHaveLength(1);
   });
 
+  test("deduplicates IDs within a batch while preserving existing history and selection", () => {
+    const existingFile = createUploadFile("existing");
+    const firstFile = createUploadFile("first");
+    const duplicateFile = createUploadFile("first", "duplicate.txt");
+    const secondFile = createUploadFile("second");
+    const selection = [existingFile, firstFile, duplicateFile, secondFile];
+
+    useUploadthingStore.getState().setFiles([existingFile]);
+    useUploadthingStore.getState().updateFileStatus("existing", "complete", "https://example.com/existing");
+    useUploadthingStore.getState().setFiles(selection);
+
+    expect(useUploadthingStore.getState().files).toEqual(selection);
+    expect(useUploadthingStore.getState().historicFiles).toEqual([
+      { ...existingFile, status: "complete", url: "https://example.com/existing" },
+      firstFile,
+      secondFile,
+    ]);
+  });
+
   test("updates and removes files from upload history", () => {
     const firstFile = createUploadFile("first");
     const secondFile = createUploadFile("second");
